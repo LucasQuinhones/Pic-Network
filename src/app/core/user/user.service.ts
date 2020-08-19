@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { TokenService } from '../token/token.service';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { User } from './user';
 import * as jtw_decode from 'jwt-decode';
 
 @Injectable({ providedIn: 'root'})
 export class UserService {
 
-    private userSubject = new Subject<User>();
+    // private userSubject = new Subject<User>(); // Subject não aguarda o header ser carregado e assim perde as informações.
+    private userSubject = new BehaviorSubject<User>(null); // BehaviorSubject irá aguardar o header ser carregado para mandar as informações.
     
     constructor(private tokenService: TokenService) {
 
